@@ -1,0 +1,83 @@
+/*
+
+*********************************
+
+Recursive Version
+
+*********************************
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+typedef long long int ll;
+
+vector<string> generateGreyCode(int n);
+
+vector<string> generateGreyCode(int n) {
+	
+	if(n == 1) {
+		return {"0", "1"};
+	}
+	
+	vector<string> prevGreyCode = generateGreyCode(n - 1);
+	vector<string> greyCode;
+	
+	for(auto itr = prevGreyCode.begin(); itr != prevGreyCode.end(); ++itr) {
+		greyCode.push_back("0" + *itr);
+	}
+	
+	for(auto itr = prevGreyCode.rbegin(); itr != prevGreyCode.rend(); ++itr) {
+		greyCode.push_back("1" + *itr);
+	}
+	
+	return greyCode;
+	
+}
+
+int main() {
+	
+	int n;
+	cin >> n;
+	vector<string> greyCode = generateGreyCode(n);
+	
+	for(auto itr = greyCode.begin(); itr != greyCode.end(); ++itr) {
+		cout << *itr << "\n";
+	}
+	
+	return 0;
+}
+
+*/
+
+
+/**********************
+
+Bitwise Version
+
+**********************/
+
+#include <iostream>
+#include <vector>
+#include <bitset>
+
+using namespace std;
+
+int main() {
+	
+	int n;
+	cin >> n;
+	int totalCodes = 1 << n; 
+	vector<string> grayCodes;
+	
+	for(int i = 0; i < totalCodes; ++ i) {
+	
+		int gray = i ^ (i >> 1);
+		grayCodes.push_back(bitset<16>(gray).to_string().substr(16 - n));
+		
+	}
+	
+	for(const string& codes : grayCodes) {
+		cout << codes << "\n";
+	}
+}
